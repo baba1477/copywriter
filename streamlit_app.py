@@ -108,15 +108,23 @@ st.markdown("""
         transform: translateY(0);
     }
     
+    /* 边框统一画在外壳层，内层留白，避免聚焦时出现双层边框 */
     .stTextArea textarea, .stTextInput input {
-        border-radius: 16px;
-        border: 1px solid #e2eaf2;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
         font-size: 0.9rem;
-        background: white;
+        background: transparent;
     }
-    .stTextArea textarea:focus, .stTextInput input:focus {
-        border-color: #4a90c4;
-        box-shadow: 0 0 0 3px rgba(74, 144, 196, 0.1);
+    .stTextArea [data-baseweb="textarea"], .stTextInput [data-baseweb="input"] {
+        border-radius: 16px;
+        border: 1px solid #e2eaf2 !important;
+        background: white;
+        overflow: hidden;
+    }
+    .stTextArea [data-baseweb="textarea"]:focus-within, .stTextInput [data-baseweb="input"]:focus-within {
+        border-color: #4a90c4 !important;
+        box-shadow: 0 0 0 3px rgba(74, 144, 196, 0.1) !important;
     }
     
     .footer {
