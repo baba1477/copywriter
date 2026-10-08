@@ -180,9 +180,13 @@ def call_api(prompt, temperature=0.8, max_tokens=1000):
     try:
         resp = requests.post(url, headers=headers, json=payload, timeout=30)
         result = resp.json()
-        return result.get("choices", [{}])[0].get("message", {}).get("content", "生成失败")
+        if resp.status_code == 200 and "choices" in result:
+            return result["choices"][0]["message"]["content"]
+        err = result.get("error", "")
+        msg = err.get("message", "") if isinstance(err, dict) else str(err)
+        return f"⚠️ 生成失败（API返回{resp.status_code}）：{msg or str(result)[:200]}"
     except Exception as e:
-        return f"请求失败: {str(e)}"
+        return f"⚠️ 请求失败: {str(e)}"
 
 def generate_copy(product_desc, platform, custom_prompt=""):
     if custom_prompt and custom_prompt.strip():
