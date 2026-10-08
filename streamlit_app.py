@@ -176,7 +176,7 @@ PLATFORM_PROMPTS = {
 def call_api(prompt, temperature=0.8, max_tokens=1000):
     url = "https://qianfan.baidubce.com/v2/chat/completions"
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {API_KEY}"}
-    payload = {"model": "ernie-speed-pro-128k", "messages": [{"role": "user", "content": prompt}], "temperature": temperature, "max_tokens": max_tokens}
+    payload = {"model": "ernie-4.5-turbo-128k", "messages": [{"role": "user", "content": prompt}], "temperature": temperature, "max_tokens": max_tokens}
     try:
         resp = requests.post(url, headers=headers, json=payload, timeout=30)
         result = resp.json()
